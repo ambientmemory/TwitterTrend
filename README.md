@@ -10,7 +10,9 @@ In order to do so, a python file DataCleaner.py has been provided. DataCleaner.p
 This project installs Hadoop on Ubuntu 14.0.1, and then configures the core-site.xml, HDFS-site.xml and map-reduce.xml to get a local namenode and a datanode running. Video link to the same. The output is available locally and appears to be working as required. 
 
 #### Step 2: Deploying this app using Amazon Elasting MapReduce (EMR)
-While deploying, I discovered that Amazon EMR uses Java 7 (update 71) whereas I was using Java 8. So I downgraded the existing projetc to Java 7 (update 80). Also, while I was running the code locally, I could read in files from the local filesystem. However, in EMR that facility does not exist. So the code was modified to be able to read in from the Amazon S3 bucket. The commonwords.txt was retained in the local filesystem and read into Hadoop file system when the map reduce program run.
-
+While deploying, I discovered that Amazon EMR uses Java 7 (update 71) whereas I was using Java 8. So I downgraded the existing projetc to Java 7 (update 80). Also, while I was running the code locally, I could read in files from the local filesystem. However, in EMR that facility does not exist. So the code was modified to be able to read in from the Amazon S3 bucket. The commonwords.txt was retained in the local filesystem and read into Hadoop file system when the map reduce program run. The following is what the file structure on Amazon S3 looks like before we execute MapReduce.
 ![alt tag] (https://raw.github.com/ambientmemory/TwitterTrend/master/imgs/amazon_folder.png)
+
+The following screenshot is how the EMR cluster initializes and then runs the program to generate a folder called output which contains seven files called part-00000n. 
+![alt tag] (https://raw.github.com/ambientmemory/TwitterTrend/master/imgs/Starting.png)
 
