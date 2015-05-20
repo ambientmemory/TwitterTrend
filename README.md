@@ -11,3 +11,6 @@ This project installs Hadoop on Ubuntu 14.0.1, and then configures the core-site
 
 #### Step 2: Deploying this app using Amazon Elasting MapReduce (EMR)
 While deploying, I discovered that Amazon EMR uses Java 7 (update 71) whereas I was using Java 8. So I downgraded the existing projetc to Java 7 (update 80). Also, while I was running the code locally, I could read in files from the local filesystem. However, in EMR that facility does not exist. So the code was modified to be able to read in from the Amazon S3 bucket. The commonwords.txt was retained in the local filesystem and read into Hadoop file system when the map reduce program run.
+
+![alt tag] (https://raw.github.com/ambientmemory/TwitterTrend/master/amazon_folder.png)
+
