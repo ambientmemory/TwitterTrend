@@ -52,7 +52,6 @@ public class map extends Mapper<LongWritable, Text, Text, IntWritable> {
 			InputStream in = null;
 			try {
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				byte[] buf = new byte[4096];
 				in = fs.open(new Path(uri));
 				IOUtils.copyBytes(in, baos, 4096); //read 4096 bytes
 				String the_file = baos.toString();
@@ -68,10 +67,10 @@ public class map extends Mapper<LongWritable, Text, Text, IntWritable> {
 				IOUtils.closeStream(in);
 			}
 		} //end of creating has map	
-		System.out.println("Size of common words : "+common_words.size());
+		//System.out.println("Size of common words : "+common_words.size());
 		//Now we process the input
 		String line = value.toString();	//convert the input line into the string
-		System.out.println("Line length : "+line.length());
+		//System.out.println("Line length : "+line.length());
 		String[] words = line.split("\\s+");	//split along ALL whitespaces
 		Map<String, Integer> hgram = new HashMap<>();	//create a collection of key value pairs to store the token frequency
 		//Now we do a check if the words of the line given match common words, or 
@@ -139,7 +138,10 @@ public class map extends Mapper<LongWritable, Text, Text, IntWritable> {
 		Iterator it = hgram.entrySet().iterator();
 		while ((it.hasNext()) && (max_rec > 0)) {
 			Map.Entry a_hist = (Map.Entry<String, Integer>) it.next();
-			context.write(new Text(a_hist.getKey().toString()), new IntWritable((int) a_hist.getValue()));
+			if ((int)(a_hist.getValue()) > 1) {
+				context.write(new Text(a_hist.getKey().toString()), new IntWritable((int) a_hist.getValue()));
+			}
+			
 			max_rec--;
 		} //end of while
 	} //end of constructor map()
